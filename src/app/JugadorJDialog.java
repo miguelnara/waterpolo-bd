@@ -6,6 +6,7 @@
 package app;
 
 import static app.EquipoJDialog.ACCION_CANCELAR;
+import javax.swing.ComboBoxModel;
 import model.*;
 
 /**
@@ -29,8 +30,13 @@ public class JugadorJDialog extends javax.swing.JDialog {
     }
     
     public void actualizar() {
-        // POR HACER;
-        
+        jLabelId.setText(String.valueOf(jugador.getId()));
+        jTextFieldApellidos.setText(jugador.getApellidos());
+        jTextFieldNombre.setText(jugador.getNombre());
+        for (Equipo e : Equipo.obtenerEquipos("", 0)){
+            jComboBox1.addItem(e.getNombre());
+        }
+        jComboBox1.setSelectedIndex(jugador.getIdEquipo());
     }
 
     /**
@@ -76,8 +82,6 @@ public class JugadorJDialog extends javax.swing.JDialog {
         jLabelId.setText("(id)");
 
         jLabel2.setText("Equipo:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButtonGuardar.setText("Guardar");
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -151,11 +155,21 @@ public class JugadorJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        // POR HACER
+        boolean exito;
+        jugador.setNombre(jTextFieldNombre.getText());
+        jugador.setApellidos(jTextFieldApellidos.getText());
+        jugador.setIdEquipo(jComboBox1.getSelectedIndex());
+        if (jugador.getId() < 1) {
+           exito = jugador.create();
+        } else {
+           exito = jugador.update();
+        }
+        this.accion = ACCION_GUARDAR;
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        // POR HACER
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
 
