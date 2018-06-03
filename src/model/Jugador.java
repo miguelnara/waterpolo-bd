@@ -183,7 +183,7 @@ public class Jugador {
                                 resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
                             } else if (esClass && rs.getInt("edad") >= 18 && rs.getInt("edad") < 26) {
                                 resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
-                            } else if (esMaster && rs.getInt("edad") > 26) {
+                            } else if (esMaster && rs.getInt("edad") >= 26) {
                                 resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
                             } else if (!(esJunior) && !(esClass) && !(esMaster)) {
                                 resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
