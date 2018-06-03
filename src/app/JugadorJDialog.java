@@ -19,7 +19,7 @@ public class JugadorJDialog extends javax.swing.JDialog {
 
     private Jugador jugador;
     private int accion;
-    private List<Integer> listaIdEquipos = new ArrayList<>();
+    List<Integer> listaIdEquipos = new ArrayList<>();
 
     public static int ACCION_CANCELAR = -1;
     public static int ACCION_GUARDAR = 0;
@@ -31,20 +31,21 @@ public class JugadorJDialog extends javax.swing.JDialog {
     public int getAccion() {
         return accion;
     }
-    
+
     public void actualizar() {
-        jLabelId.setText(String.valueOf(jugador.getId()));
-        jTextFieldApellidos.setText(jugador.getApellidos());
-        jTextFieldNombre.setText(jugador.getNombre());
-        jTextFieldEdad.setText(String.valueOf(jugador.getEdad()));
+        jLabelId.setText(String.valueOf(getJugador().getId()));
+        jTextFieldApellidos.setText(getJugador().getApellidos());
+        jTextFieldNombre.setText(getJugador().getNombre());
+        jTextFieldEdad.setText(String.valueOf(getJugador().getEdad()));
         listaIdEquipos.clear();
-        for (Equipo e : Equipo.obtenerEquipos("", 0)){
+
+        for (Equipo e : Equipo.obtenerEquipos("", 0)) {
             jComboBox1.addItem(e.getNombre());
             listaIdEquipos.add(e.getId());
         }
-        jComboBox1.setSelectedIndex(listaIdEquipos.indexOf(jugador.getIdEquipo()));
-        
-        if (jugador.getId() > 0){
+        jComboBox1.setSelectedIndex(listaIdEquipos.indexOf(getJugador().getIdEquipo()));
+
+        if (jugador.getId() > 0) {
             jTextFieldEdad.setEnabled(false);
         }
     }
@@ -176,15 +177,17 @@ public class JugadorJDialog extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         boolean exito;
-        jugador.setNombre(jTextFieldNombre.getText());
-        jugador.setApellidos(jTextFieldApellidos.getText());
-        jugador.setEdad(Integer.parseInt(jTextFieldEdad.getText()));
-        jugador.setIdEquipo(listaIdEquipos.get(jComboBox1.getSelectedIndex()));
-        if (jugador.getId() < 1) {
-           exito = jugador.create();
+        getJugador().setNombre(jTextFieldNombre.getText());
+        getJugador().setApellidos(jTextFieldApellidos.getText());
+        getJugador().setEdad(Integer.parseInt(jTextFieldEdad.getText()));
+        getJugador().setIdEquipo(listaIdEquipos.get(jComboBox1.getSelectedIndex()));
+
+        if (getJugador().getId() < 1) {
+            exito = getJugador().create();
         } else {
-           exito = jugador.update();
+            exito = getJugador().update();
         }
+
         this.accion = ACCION_GUARDAR;
         this.setVisible(false);
     }//GEN-LAST:event_jButtonGuardarActionPerformed

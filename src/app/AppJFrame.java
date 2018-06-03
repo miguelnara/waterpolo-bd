@@ -104,6 +104,7 @@ public class AppJFrame extends javax.swing.JFrame {
         jRadioButtonCategoriaClass = new javax.swing.JRadioButton();
         jRadioButtonCategoriaMaster = new javax.swing.JRadioButton();
         jLabelCategoria = new javax.swing.JLabel();
+        jRadioButtonCategoriaTodas = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -305,6 +306,14 @@ public class AppJFrame extends javax.swing.JFrame {
 
         jLabelCategoria.setText("Categoria:");
 
+        buttonGroupCategoria.add(jRadioButtonCategoriaTodas);
+        jRadioButtonCategoriaTodas.setText("Todas");
+        jRadioButtonCategoriaTodas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonCategoriaTodasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -323,15 +332,17 @@ public class AppJFrame extends javax.swing.JFrame {
                                 .addComponent(jLabelLBuscarJugador)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldBuscarJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(78, 78, 78)
+                                .addGap(16, 16, 16)
                                 .addComponent(jLabelCategoria)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonCategoriaTodas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButtonCategoriaJunior)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButtonCategoriaClass)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButtonCategoriaMaster)))
-                        .addGap(0, 28, Short.MAX_VALUE)))
+                        .addGap(0, 41, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -344,7 +355,8 @@ public class AppJFrame extends javax.swing.JFrame {
                     .addComponent(jRadioButtonCategoriaJunior)
                     .addComponent(jRadioButtonCategoriaClass)
                     .addComponent(jRadioButtonCategoriaMaster)
-                    .addComponent(jLabelCategoria))
+                    .addComponent(jLabelCategoria)
+                    .addComponent(jRadioButtonCategoriaTodas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -374,6 +386,7 @@ public class AppJFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -498,6 +511,10 @@ public class AppJFrame extends javax.swing.JFrame {
         actualizarListaJugadores();
     }//GEN-LAST:event_jTextFieldBuscarJugadoresKeyReleased
 
+    private void jRadioButtonCategoriaTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCategoriaTodasActionPerformed
+        actualizarListaJugadores();
+    }//GEN-LAST:event_jRadioButtonCategoriaTodasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -556,6 +573,7 @@ public class AppJFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonCategoriaClass;
     private javax.swing.JRadioButton jRadioButtonCategoriaJunior;
     private javax.swing.JRadioButton jRadioButtonCategoriaMaster;
+    private javax.swing.JRadioButton jRadioButtonCategoriaTodas;
     private javax.swing.JRadioButton jRadioButtonOrdenNombre;
     private javax.swing.JRadioButton jRadioButtonOrdenPais;
     private javax.swing.JScrollPane jScrollPane1;

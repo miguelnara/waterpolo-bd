@@ -172,9 +172,7 @@ public class Jugador {
         boolean todoOk = true;
         try (Connection conn = ConexionBd.obtener()) {
 
-            String sql = "SELECT id, nombre, apellidos, edad, idequipo FROM jugador";
-            if (!(busqueda.equals(""))) {
-                sql = sql + " WHERE LOWER(nombre) LIKE ? OR LOWER(apellidos) LIKE ?";
+            String sql = "SELECT id, nombre, apellidos, edad, idequipo FROM jugador WHERE LOWER(nombre) LIKE ? OR LOWER(apellidos) LIKE ?";
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                     String busquedaSql = "%" + busqueda.toLowerCase() + "%";
                     stmt.setString(1, busquedaSql);
@@ -193,23 +191,6 @@ public class Jugador {
                         }
                     }
                 }
-            } else {
-                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                    try (ResultSet rs = stmt.executeQuery()) {
-                        while (rs.next()) {
-                            if (esJunior && rs.getInt("edad") >= 14 && rs.getInt("edad") < 18) {
-                                resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
-                            } else if (esClass && rs.getInt("edad") >= 18 && rs.getInt("edad") < 26) {
-                                resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
-                            } else if (esMaster && rs.getInt("edad") > 26) {
-                                resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
-                            } else if (!(esJunior) && !(esClass) && !(esMaster)) {
-                                resultado.add(new Jugador(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("edad"), rs.getInt("idequipo")));
-                            }
-                        }
-                    }
-                }
-            }
         } catch (SQLException ex) {
             todoOk = false;
             ex.printStackTrace();

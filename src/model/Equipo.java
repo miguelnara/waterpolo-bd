@@ -98,11 +98,10 @@ public class Equipo {
                 stmt.setInt(1, getId());
 
                 try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        setNombre(rs.getString("nombre"));
-                        setCiudad(rs.getString("ciudad"));
-                        setPais(rs.getString("pais"));
-                    }
+                    rs.next();
+                    setNombre(rs.getString("nombre"));
+                    setCiudad(rs.getString("ciudad"));
+                    setPais(rs.getString("pais"));
                 }
             }
         } catch (SQLException ex) {
@@ -165,7 +164,12 @@ public class Equipo {
             exito = false;
             ex.printStackTrace();
         }
-        return resultado;
+
+        if (exito) {
+            return resultado;
+        } else {
+            return null;
+        }
     }
 
     // ----------- Otras, de clase, no relacionadas con ÉSTE (this) objeto
@@ -174,32 +178,21 @@ public class Equipo {
         if (!(orden >= 0 && orden <= 1)) {
             throw new IllegalArgumentException("Parámetro de orden de equipos no admitido");
         }
+
         List<Equipo> resultado = null;
         boolean exito = true;
         try (Connection conn = ConexionBd.obtener()) {
             resultado = new ArrayList<>();
-            String sql = "SELECT id, nombre, ciudad, pais FROM EQUIPO";
-            if (!(busqueda.equals(""))) {
-                sql = sql + " WHERE LOWER(nombre) LIKE ? OR LOWER(ciudad) LIKE ? OR LOWER(pais) LIKE ?";
-                sql = orden == 0 ? sql + " ORDER BY nombre" : sql + " ORDER BY pais";
-                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                    String busquedaSql = "%" + busqueda.toLowerCase() + "%";
-                    stmt.setString(1, busquedaSql);
-                    stmt.setString(2, busquedaSql);
-                    stmt.setString(3, busquedaSql);
-                    try (ResultSet rs = stmt.executeQuery()) {
-                        while (rs.next()) {
-                            resultado.add(new Equipo(rs.getInt("id"), rs.getString("nombre"), rs.getString("ciudad"), rs.getString("pais")));
-                        }
-                    }
-                }
-            } else {
-                sql = orden == 0 ? sql + " ORDER BY nombre" : sql + " ORDER BY pais";
-                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                    try (ResultSet rs = stmt.executeQuery()) {
-                        while (rs.next()) {
-                            resultado.add(new Equipo(rs.getInt("id"), rs.getString("nombre"), rs.getString("ciudad"), rs.getString("pais")));
-                        }
+            String sql = "SELECT id, nombre, ciudad, pais FROM EQUIPO WHERE LOWER(nombre) LIKE ? OR LOWER(ciudad) LIKE ? OR LOWER(pais) LIKE ?";
+            sql = orden == 0 ? sql + " ORDER BY nombre" : sql + " ORDER BY pais";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                String busquedaSql = "%" + busqueda.toLowerCase() + "%";
+                stmt.setString(1, busquedaSql);
+                stmt.setString(2, busquedaSql);
+                stmt.setString(3, busquedaSql);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        resultado.add(new Equipo(rs.getInt("id"), rs.getString("nombre"), rs.getString("ciudad"), rs.getString("pais")));
                     }
                 }
             }
